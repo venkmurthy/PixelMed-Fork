@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for WatchFolderAndSend -->
+<jnlp
+  spec="1.5+"
+  codebase="http://www.dclunie.com/pixelmed/software/webstart"
+  href="WatchFolderAndSend.jnlp">
+  <information>
+    <title>WatchFolderAndSend</title>
+    <vendor>PixelMed Publishing</vendor>
+    <homepage href="javadoc/index.html"/>
+    <description>WatchFolderAndSend Application</description>
+    <description kind="short">WatchFolderAndSend Application.</description>
+    <icon href="icons/WatchFolderAndSend.png"/>
+    <offline-allowed/> 
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" java-vm-args="-Xmx128m"/>
+    <jar href="pixelmed.jar"/>
+  </resources>
+  <application-desc main-class="com.pixelmed.apps.WatchFolderAndSend"/>
+</jnlp> 
+

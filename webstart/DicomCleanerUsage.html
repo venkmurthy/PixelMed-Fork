@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>How to use DicomCleaner</title>
+</head>
+<body>
+<table width="100%">
+<tr>
+<td><img SRC="images/PixelMedLogoAndTitle.gif" ALT="PixelMed Publishing" BORDER=0></td>
+<td><A HREF="http://www.opensource.org/"><IMG SRC="images/osi_standard_logo.png" width="90" height="103" border="0"/></A></td>
+</tr>
+</table>
+<hr/>
+<table>
+<tr>
+<td><a href="DicomCleaner.html"><IMG SRC="images/DicomCleanerMainPanelAfterClean.png" BORDER=0/></a></td>
+</tr>
+</table>
+<hr/>
+<a href="DicomCleaner.html"><IMG SRC="icons/DicomCleaner.png" ALT="Click here to start the DicomCleaner" BORDER=0/></a>
+<a name="Description"><h1>What is <a href="DicomCleaner.html">DicomCleaner</a>?</h1></a>
+<p><a href="DicomCleaner.html">DicomCleaner</a> is a free open source tool with a user interface for importing, "cleaning" and saving sets of DICOM instances (files). It can:</p>
+<ul>
+<li>Import files from a CD or the local hard drive or a shared network drive or any other media, with or without a DICOMDIR</li>
+<li>Query and retrieve from remote DICOM devices</li>
+<li>"Clean" the DICOM "header" of a selected set of instances</li>
+<li>Blackout burned in annotations in the pixel data of the cleaned files</li>
+<li>Export the cleaned instances to a folder with a DICOMDIR, which can be burned to a CD or DVD</li>
+<li>Send the cleaned instances over the network to a remote DICOM device</li>
+</ul>
+<a name="Cleaning"><h2>What does "cleaning" mean?</h2></a>
+<p>"Cleaning" is used to refer to the process of removing and/or replacing information in the DICOM "header". The user is given control over
+what to remove and replace, including the ability to import and export without doing any cleaning at all, or to completely de-identify
+the header and replace the identifying attributes with new values. Use cases that are supported include:</p>
+<ul>
+<li>Importing images into the local PACS, changing the Patient ID and Accession Number to local values</li>
+<li>Cleaning images for research or teaching, by removing identifiers and replacing them with dummy values</li>
+</ul>
+<p>The user is provide with control over:</p>
+<ul>
+<li>Replacement values for Patient's Name, Patient's ID and Accession Number</li>
+<li>Replacement of all other identifying attributes (e.g., Referring Physician's Name, etc.)</li>
+<li>Removal or retention of descriptions (e.g., Study Description), which though useful may sometimes have identifying information, with a separate option to remove or retain the Series Description (which is generally both useful and safe)</li>
+<li>Removal or retention of patient characteristics (e.g., sex and weight), which are essential for PET SUV but otherwise often removed</li>
+<li>Removal or retention of device identifiers (e.g., serial number), which may be needed to track device performance but otherwise may be removed</li>
+<li>Removal or retention of institution identifiers, which may be needed to track facility performance but otherwise may be removed</li>
+<li>Removal or retention of clinical trial attributes, which may need to be removed for secondary re-use of clinical trial images</li>
+<li>Replacement of DICOM unique identifiers, which is performed consistently for a set of instances to maintain referential integrity</li>
+<li>Removal or retention of private attributes, except those that are known to be safe to leave and are important (e.g., SUV scale factor)</li>
+<li>Addition of a description of the <a href="DicomCleaner.html">DicomCleaner</a> software as contributing equipment, to maintain a record in the cleaned instances of what tool was used</li>
+<li>Export of DICOM files and DICOMDIR directly into a folder (intended for CD burning) or a zip file</li>
+</ul>
+<p>The following panel shows the control panel with default values for the checkboxes suitable for a typical de-identification scenario:</p>
+<center>
+<table>
+<tr>
+<td><IMG SRC="images/DicomCleanerControlPanel.png"/></td>
+</tr>
+</table>
+</center>
+<p>As an example of how to perform the cleaning process, the following steps might be performed to query, retrieve, de-identify, blackout and export images to a zip file (assuming that the network has already been configured; see <A HREF="#Configuration">How to configure it</A>):</p>
+<ol>
+<li>Enter the first few letters of the desired subject&apos;s name in the query patient&apos;s name field with a trailing asterisk ("*") wildcard (if left blank, the PACS will be queried for all patients)</li>
+<li>Press Query and select the remote system to query from the popup and press OK</li>
+<li>Observe the result of the query of the remote system in the left hand panel</li>
+<li>Select in the left hand panel the patient to be retrieved (or expand the tree and select a study or series as required)</li>
+<li>Press Retrieve</li>
+<li>Observe the retrieved patient appear in the middle (Original) panel</li>
+<li>Check or uncheck the boxes in the control panel as appropriate for the level of de-identification required</li>
+<li>Populate the replacement Patient&apos;s Name, ID and Accession Number fields as required (or uncheck the boxes of those fields not to be replaced)</li>
+<li>Select in the middle (Original) panel the patient to be cleaned (or expand the tree and select a study or series as required)</li>
+<li>Press Clean to perform the de-identification</li>
+<li>Observe the cleaned patient appear in the right (Cleaned) panel</li>
+<li>If necessary, select in the right (Cleaned) panel a patient to be blacked out (or expand the tree and select a study or series as required) and press Blackout (see <A HREF="#Blackout">Blackout</A>)</li>
+<li>Make sure that the "Zip exported files" checkbox is checked</li>
+<li>Select in the right (Cleaned) panel a patient to be exported (or expand the tree and select a study or series as required)</li>
+<li>Press Export, select a destination for the zip file in the popup dialog, and press Open (Windows) to perform the export to a file named "export.zip"</li>
+</ol>
+<p>To import images from media such as CDs or the local file system instead or retrieving over the network, replace steps 1 through 5 with a press of the Import button and navigate using the popup dialog to the
+drive, folder or DICOMDIR and press Open (Windows) or OK (Mac); no network configuration is required.</p>
+<p>Any steps of this process can be repeated as necessary; retrieved, imported and cleaned patients, studies, series and images remain until the application is closed unless they are explicitly selected and purged.</p>
+<p>If desired, the process can be executed without performing any de-identification (leaving the DICOM headers and pixel data intact) by setting the following configuration of checkboxes,
+allowing images to be imported or retrieved, then exported or transferred elsewhere, with a "dummy" cleaning step:</p>
+<center>
+<table>
+<tr>
+<td><IMG SRC="images/DicomCleanerControlPanelPassThru.png"/></td>
+</tr>
+</table>
+</center>
+
+<a name="Blackout"><h2>Blackout</h2></a>
+<p>Some types of images, particularly ultrasound, screen shots of analysis panels and 3D rendering, digitized film or paper documents, and some nuclear medicine images, contain
+identifying information not just in the DICOM "header", but also burned in to the pixel data, which needs to be "blacked out" by replacing the pixel values using an image editor.</p>
+<p>The "Blackout" button in the main <a href="DicomCleaner.html">DicomCleaner</a> control panel provides this capability. When a set of images has been cleaned and selected in the "Cleaned" panel,
+pressing "Blackout" brings up an image editor that allows rectangular regions of the image to be filled with black pixels.</p>
+<center>
+<table>
+<tr>
+<td><IMG SRC="images/DicomImageBlackoutColorUltrasound.png"/></td>
+</tr>
+</table>
+</center>
+<p>The user has control over which value is used to replace the blacked out pixels. If Use Padding and Use Zero are unchecked,
+then the lowest possible pixel value given the signedness and bit depth of the pixel data will be used. If Use Padding is checked
+(which it is by default), then Pixel Padding Value, if present in the header, will be used instead of the lowest possible value. If
+Use Zero is checked, than a value of zero will always be used, regardless of the lowest possible value or Pixel Padding Value; this
+is sometimes necessary if no windowing information is present in the header, and the lowest possible value turns out to be very -ve
+(everything turns white after Save is pressed).</p>
+<p>Some images also contain information in overlay planes that are intended to be displayed on top of the pixel data, and this also can contain identifiable information that needs
+to be removed.</p>
+<p>The "Overlays" checkbox in the "Blackout" panel activates display of this information, which can then be blacked out, in which case the remaining overlay information will
+be "burned in" to the saved pixel data and the overlays themselves removed. Indeed, even if there is no need to blackout the overlay information, the side effect of burning in the overlay
+may be useful, particularly if downstream viewers do not support overlay display, as many do not.</p>
+<center>
+<table>
+<tr>
+<td><IMG SRC="images/DicomImageBlackoutOverlayDose.png"/></td>
+</tr>
+</table>
+</center>
+
+<a name="Usage"><h2>How to start it</h2></a>
+<p><a href="DicomCleaner.html">DicomCleaner</a> is a Java Web Start (JWS) application that you can run from within a web browser. It runs on any platform that supports Java 1.5 or greater,
+and does not require any "installation" per se. Just click on the <a href="DicomCleaner.html">DicomCleaner</a> link, and confirm all security requests to run the application.
+Java must not be disabled in your browser (check browser security settings). 
+If Java is not already installed, you may be prompted to install it or allow automatic installation to proceed. After Java installation, you may need to reload the link to get
+the application to start.
+In MacOS Safari, the 'Open "safe" files after downloading' checkbox in Preferences&gt;General must be enabled (otherwise you will have to double-click the JNLP file in the Downloads window).</p>
+<p>Whenever you use the web start application, it will automatically check for the
+latest version on the web site and use that, so you never need to be concerned about upgrading or maintenance.</p>
+<p>If you like, you can right-click on the <a href="DicomCleaner.html">link</a> to save it as a Desktop Shortcut to make it as easy to start up as any other application, but this is not required, since you can always start it from a browser.
+If you make such a shortcut, you can give it an icon by downloading <a href="http://www.dclunie.com/pixelmed/software/webstart/icons/DicomCleaner.ico">this Windows icon (.ico) file</a>, and right-clicking the shortcut and selecting its Properties, and browsing to the downloaded .ico file.</p>
+<center>
+<table>
+<tr>
+<td><IMG SRC="images/DicomCleanerCopyShortcut.png"/></td>
+<td><IMG SRC="images/DicomCleanerPasteShortcut.png"/></td>
+</tr>
+</table>
+</center>
+<p>You can do something similar on the Mac by dragging this <a href="DicomCleaner.html">link</a> to the Desktop, and can give it an icon using the Get Info (Cmd-I) dialog, renaming the file to "DicomCleaner.fileloc" and downloading <a href="http://www.dclunie.com/pixelmed/software/webstart/icons/DicomCleaner.png">this PNG file</a> and dragging it on top of the icon in the dialog.</p>
+
+<a name="Configuration"><h2>How to configure it</h2></a>
+<p>If you want to use a DICOM network (rather than importing from or exporting to folders and files), you can use the "Configure" button to enter information
+about remote DICOM network devices and the port and AET of the DicomCleaner itself.</p>
+<center>
+<table>
+<tr>
+<td><IMG SRC="images/DicomCleanerLocalConfiguration.png"/></td>
+<td><IMG SRC="images/DicomCleanerRemoteConfiguration.png"/></td>
+</tr>
+</table>
+</center>
+<p>This information will be saved in a properties files located in
+the user's home directory, called ".com.pixelmed.display.DicomCleaner.properties", so that you do not have to re-enter it next time. The
+property file can also be created or edited manually, though any comments will be lost when the "Configure" button in the user interface is used to
+update it. Here is an <a href="sample.com.pixelmed.display.DicomCleaner.properties">example</a> properties file.
+The application also supports DNS self-discovery of other DICOM applications, though this is not widely deployed.</p>
+<a name="Installation"><h2>How to install it (locally)</h2></a>
+<p>If for some reason you do not want to start the application using Java Web Start, but instead want to download it and install it, several versions are available:</p>
+<ul>
+<li><a href="http://www.dclunie.com/pixelmed/software/winexe/DicomCleanerWithOwnJRE.zip">Windows executable that does not require Java to be installed</a> [approx. 45 MB] (includes its own JRE, internationalized fonts, and JIIO libraries)</li>
+<li><a href="http://www.dclunie.com/pixelmed/software/winexe/DicomCleanerAssumingJREInstalled.zip">Windows executable that requires Java 1.5 or later to already be installed</a> [approx. 3.9 MB] (includes its own  JIIO libraries, since these are often not installed)</li>
+<li><a href="http://www.dclunie.com/pixelmed/software/macexe/DicomCleanerMac.zip">MacOS executable that requires Java 1.5 or later to already be installed</a> [approx. 2.1 MB] (includes pure Java JIIO libraries for limited decompression support)</li>
+</ul>
+<p>The downloaded installable version does NOT automatically update when new versions are released, however.</p>
+<p>If you need to report a problem, and want to know what version you are using, look at the status bar immediately after starting the application:</p>
+<center>
+<table>
+<tr>
+<td><IMG SRC="images/DicomCleanerShowVersion.png"/></td>
+</tr>
+</table>
+</center>
+<p>The open source code is contained within the <a href="http://www.dclunie.com/pixelmed/software/">PixelMed toolkit</a>.</p>
+<hr/>
+<a href="DicomCleaner.html"><IMG SRC="icons/DicomCleaner.png" ALT="Click here to start the DicomCleaner" BORDER=0/></a>
+<p></a>Click here to start the <a href="DicomCleaner.html">DicomCleaner</a>.</p>
+</body>
+</html>

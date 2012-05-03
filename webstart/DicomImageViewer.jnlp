@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for DicomImageViewer -->
+<jnlp
+  codebase="http://www.dclunie.com/pixelmed/software/webstart"
+  href="DicomImageViewer.jnlp">
+  <information>
+    <title>DicomImageViewer</title>
+    <vendor>PixelMed Publishing</vendor>
+    <homepage href="javadoc/index.html"/>
+    <description>DicomImageViewer Application</description>
+    <description kind="short">A simple DICOM image and spectroscopy viewer.</description>
+    <icon href="icons/DicomImageViewer.png"/>
+    <offline-allowed/> 
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" java-vm-args="-Xmx512m"/>
+    <jar href="pixelmed.jar"/>
+	<jar href="commons-codec-1.3.jar" download="eager"/>
+	<jar href="hsqldb.jar" download="lazy"/>
+	<jar href="jmdns.jar" download="lazy"/>
+	<jar href="excalibur-bzip2-1.0.jar" download="lazy"/>
+	<jar href="vecmath1.2-1.14.jar" download="lazy"/>
+	<!--extension href="http://download.java.net/media/jai-imageio/webstart/release/jai-imageio-1.1.jnlp"/-->
+	<!--extension href="http://download.java.net/media/jai-imageio/webstart/early-access/jai-imageio-1.1.jnlp"/-->
+	<extension href="http://www.dclunie.com/pixelmed/software/webstart/jai-imageio-1.1_DAC.jnlp"/>
+  </resources>
+  <application-desc main-class="com.pixelmed.display.DicomImageViewer"/>
+</jnlp> 
+

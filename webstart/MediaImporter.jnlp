@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for MediaImporter -->
+<jnlp
+  codebase="http://www.dclunie.com/pixelmed/software/webstart"
+  href="MediaImporter.jnlp">
+  <information>
+    <title>MediaImporter</title>
+    <vendor>PixelMed Publishing</vendor>
+    <homepage href="javadoc/index.html"/>
+    <description>MediaImporter Application</description>
+    <description kind="short">A simple media checker that searches for DICOMDIR and/or DICOM files.</description>
+    <icon href="icons/MediaImporter.png"/>
+    <offline-allowed/> 
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+"/>
+    <jar href="pixelmed.jar"/>
+	<jar href="commons-codec-1.3.jar" download="eager"/>
+  </resources>
+  <application-desc main-class="com.pixelmed.dicom.MediaImporter"/>
+</jnlp> 
+

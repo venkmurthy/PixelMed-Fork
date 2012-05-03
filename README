@@ -1,0 +1,222 @@
+20110907. DAC.
+
+This is the PixelMed Publishing pure Java DICOM toolkit. All the
+class and supporting files are included in a single jar file,
+pixelmed.jar.
+
+Installation.
+
+A JRE of 1.5.0 or more recent is required.
+
+The following additional jar files from other freely available packages
+may be required, depending on which components of the toolkit are used:
+
+junit-4.8.1.jar
+
+		Required for compilation but currently only required at runtime
+		for the tests related to the dose packages (doseocr and test);
+		however, future versions of the toolkit will likely make more
+		extensive use of junit for unit testing.
+
+hsqldb.jar
+
+		The HypersonicSQL database. The recommended version is
+		1.8.0.7 or later. Versions prior to 1.8.0 will not work.
+		
+		See "http://hsqldb.org/".
+
+		Required at runtime for applications that use a database (such
+		as DicomImageViewer and the various servers).
+		
+		Required for building from source.
+		
+xmlpack.jar [no longer required]
+
+		Since the components used for xml and xslt during translation
+		and validation are now included in the 1.5 JRE, this package
+		is no longer necessary at compilation or run time.
+		
+excalibur-bzip2-1.0.jar
+
+		A pure Java implementation of the bzip2 compression algorithm. Even
+		though this is only used to support a private PixelMed compression
+		transfer syntax, the jar file is required at runtime regardless. It
+		is available from the Apache project:
+		
+		"http://www.apache.org/dist/avalon/excalibur/components/deprecated/bzip2/"
+
+		It was formerly part of the Apache Jakarta Avalon Excalibur project
+		as a component, but has now been folded into the Ant distribution,
+		which is why it is flagged as deprecated.
+
+		Required at runtime for applications that want to support bzip2
+		transfer syntaxes ... absence will be detected dynamically and
+		these transfer syntaxes will not be offered or accepted.
+		
+		Not required for building from source.
+		
+vecmath1.2-1.14.jar
+
+		The computation of geometric information (such as for posting localizers
+		and reporting 3D cursor positions) for cross-sectional images depends
+		on the Java 3D API, and since this isn't available for all platforms,
+		the code makes use of the routines in this free 3rd party implementation
+		of the vector math (only) parts of the 3D API written by Kenji Hiranabe:
+
+		"http://objectclub.esm.co.jp/vecmath/"
+		
+		The official Sun Java 3D implementation also works, if it is available
+		for your hardware platform.
+
+		Required at runtime for applications that want use 3D localization, such
+		as DicomImageViewer.
+		
+		Required for building from source unless Java3D installed.
+		
+commons-codec-1.3.jar
+
+		Contains encoding of person name using phonetic mechanisms such as Soundex
+		and Metaphone; used for person name matching in database queries. See:
+		
+		"http://jakarta.apache.org/commons/codec/"
+
+		Required at runtime for applications that want to support phonetic matching;
+		absense will result in trapped exceptions and default use of canonical as
+		phonetic name (i.e., the exceptions are harmless).
+		
+		Not required for building from source.
+		
+commons-net-ftp-2.0
+
+		Contains ftp and secure ftp clients.
+		
+		For use with IHE REM Dose Information Reporter transaction for transfer to
+		registry (which is via ftp over TLS (RFC 4217) rather than DICOM).
+
+jmdns.jar
+
+		Contains support for Multicast DNS (mDNS) and DNS Self Discovery (DNS-SD)
+		used for zeroconf network configuration (aka. Apple's Bonjour):
+		
+		"http://sourceforge.net/projects/jmdns/"
+		"http://jmdns.sourceforge.net/"
+		
+		Tested with version jmdns-3.4.1 from sourceforge unmodified (2.x versions
+		will no longer work, since some 3.x API changes and features are now used).
+
+		Required at runtime for all DICOM network applications that want to perform
+		self discovery ... absence will be detected dynamically and self discovery
+		will not be performed.
+		
+		Required for building from source.
+
+jpedalSTD.jar
+
+		Contains support for reading and rendering PDF:
+		
+		"http://www.jpedal.org/"
+		
+		Tested with 2007/06/14 GPL version.
+		
+		Note that there are also commercial (non-GPL) versions that should work.
+		
+		Also, additional jar files are available from the JPedal site, including
+		the BouncyCastle cryptography provider (bcprov-jdk14-119.jar, which is open
+		source) and the jdom XML provider (jdom.jar, also open source); neither of
+		these appear to be necessary for decoding PDF files as used in the
+		pixelmed toolkit,given the faciities of contemporary JVMs.
+		
+		There is also at the JPedal site a jar file that is not open source but is
+		free for non-commercial use (only), which provides support for rendering of
+		embedded fonts (pjes.jar); this is not necessary for the function of the
+		tools, but may improve the quality of the rendering.
+
+		******** GPL Alert ********
+		
+		NB. JPedal is GPL - PixelMed is not - consider this with respect to using
+		and or distributing PixelMed-based source and/or binary code that depends
+		on the JPedal functionality - the only thing that will not work if JPedal
+		is not included is rendering of PDF (com.pixelmed.dicom.PDFToDicomImage)
+		
+		Not required for building from source (reflection is used to detect if
+		present at runtime when necessary).
+		
+		NOT INCLUDED IN PIXELMED DISTRIBUTION - DOWNLOAD IT YOURSELF AS REQUIRED.
+		
+AiViewer
+
+		Though not a dependency per se, the web server does support the use of
+		Takahiro Katoji's AiViewer open source GPL Java applet from Akira Iwata's
+		laboratory at the Nagoya Institute of Technology with the web server.
+		
+		It is available from "http://mars.elcom.nitech.ac.jp/dicom".
+		
+		To use it, make sure that the class files are in the "dicomviewer" folder
+		in the root of the web server folder (where the stylesheet is), as specified
+		in the web server properties. The DICOM dictionary is not necessary but can
+		be put in the same location. Then set the RequestTypeToUseForInstances
+		web server property to APPLETDISPLAY. Alternatively, include a jar file
+		in the classpath that contains the dicomviewer/*.class files.
+		
+		Alternatively, one could modify the AppletDisplayTemplate.tpl template to
+		directly get the class files from the Nagoya site, but then the local
+		java security policy file would need to be changed to allow the applet
+		to access images from a different server than that from which the class
+		files were obtained.
+			
+		Not required for building from source.
+		
+Java Image I/O
+
+		Support for reading and displaying images with compressed transfer syntaxes
+		depends on the availability of native or pure Java Image I/O (JIIO) codecs.
+		
+		Binary builds are available from:
+		
+			http://download.java.net/media/jai-imageio/builds/release/
+		
+		These can be used by either installing them into the JRE, or by including
+		the jar files in the classpath (and the native libraries in the path).
+			
+		Not required for building from source.
+
+Fonts and Internationalization
+
+		To support some international character sets, you need to be sure that your
+		JRE is installed with the charsets.jar file, which is optional on some
+		platforms. Make sure that during JRE install that you select the "custom
+		installation" and select the "Support for additional locales" feature. See:
+
+		http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6329080
+		
+		If you fail to do this, you may get an java.io.UnsupportedEncodingException.
+		
+		As far as fonts are concerned, see the discussion in section 4.2.6 Fonts
+		of the docs/DicomImageViewer/UserManual.pdf user guide.
+
+Invocation.
+
+One the various jar files have been assembled, applications in the DICOM toolkit can be
+invoked as follows, using the com.pixelmed.display.DicomImageViewer as an example:
+
+java -Xmx512m -Xms512m -cp "./pixelmed.jar:./lib/additional/hsqldb.jar:./lib/additional/excalibur-bzip2-1.0.jar:./lib/additional/vecmath1.2-1.14.jar:./lib/additional/jmdns.jar:./lib/additional/commons-codec-1.3.jar:./lib/additional/jai_imageio.jar" com.pixelmed.display.DicomImageViewer
+
+Note that for practical display or processing of large DICOM images a lot of heap
+space is necessary, hence the "-Xmx512m -Xms512m".
+
+On some Windows Java installations, the Direct3D drivers (e.g., Nvidia) are buggy,
+and adding "-Dsun.java2d.d3d=false" will help; this can also be set from an
+environment variable "_JAVA_OPTIONS" ; see also
+
+	http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6762839
+	http://java.sun.com/j2se/1.5.0/docs/guide/2d/flags.html
+
+Development Documentation.
+
+To use the toolkit for your own applications, read the documentation of the classes
+provided, both as traditional Javadoc (see docs/javadoc/index.html) and as Doxygen
+(see docs/doxygen/html/index.html).
+
+
+
+ 

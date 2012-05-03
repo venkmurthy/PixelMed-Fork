@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for ConvertAmicasJPEG2000FilesetToDicom -->
+<jnlp
+  spec="1.5+"
+  codebase="http://www.dclunie.com/pixelmed/software/webstart"
+  href="ConvertAmicasJPEG2000FilesetToDicom.jnlp">
+  <information>
+    <title>ConvertAmicasJPEG2000FilesetToDicom</title>
+    <vendor>PixelMed Publishing</vendor>
+    <homepage href="javadoc/index.html"/>
+    <description>ConvertAmicasJPEG2000FilesetToDicom Application</description>
+    <description kind="short">Convert Amicas JPEG2000 Fileset to Dicom.</description>
+    <icon href="icons/ConvertAmicasJPEG2000FilesetToDicom.png"/>
+    <offline-allowed/> 
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" java-vm-args="-Xmx128m"/>
+    <jar href="pixelmed.jar"/>
+	<!--extension href="http://download.java.net/media/jai-imageio/webstart/release/jai-imageio-1.1.jnlp"/-->
+	<!--extension href="http://download.java.net/media/jai-imageio/webstart/early-access/jai-imageio-1.1.jnlp"/-->
+	<extension href="http://www.dclunie.com/pixelmed/software/webstart/jai-imageio-1.1_DAC.jnlp"/>
+  </resources>
+  <application-desc main-class="com.pixelmed.convert.ConvertAmicasJPEG2000FilesetToDicom"/>
+</jnlp> 
+
